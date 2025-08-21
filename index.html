@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breastfeeding Pumps Dashboard Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="dashboards/shared/css/main.css" />
+    <style>
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .hero-section {
+        padding: 60px 20px 40px;
+        text-align: center;
+        color: white;
+      }
+      
+      .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin: 0 0 16px;
+        background: linear-gradient(45deg, #ffffff, #e2e8f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.3rem;
+        margin: 0 0 12px;
+        opacity: 0.9;
+        font-weight: 300;
+      }
+      
+      .hero-description {
+        font-size: 1.1rem;
+        margin: 0 auto;
+        max-width: 600px;
+        opacity: 0.8;
+        line-height: 1.6;
+      }
+      
+      .dashboard-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 24px;
+      }
+      
+      .dashboard-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .dashboard-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+      }
+      
+      .dashboard-card:hover::before {
+        transform: scaleX(1);
+      }
+      
+      .dashboard-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      }
+      
+      .dashboard-icon {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        display: block;
+      }
+      
+      .dashboard-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 12px;
+        color: #0f172a;
+      }
+      
+      .dashboard-description {
+        font-size: 0.95rem;
+        color: #64748b;
+        line-height: 1.6;
+        margin: 0 0 24px;
+      }
+      
+      .dashboard-features {
+        margin: 20px 0;
+      }
+      
+      .dashboard-features h4 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 0 0 12px;
+        color: #374151;
+      }
+      
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .feature-item {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin: 6px 0;
+        padding-left: 20px;
+        position: relative;
+      }
+      
+      .feature-item::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #10b981;
+        font-weight: 600;
+      }
+      
+      .dashboard-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e7eb;
+      }
+      
+      .dashboard-version {
+        font-size: 0.8rem;
+        color: #9ca3af;
+        background: #f3f4f6;
+        padding: 4px 8px;
+        border-radius: 6px;
+      }
+      
+      .dashboard-status {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-weight: 500;
+      }
+      
+      .status-active {
+        background: #d1fae5;
+        color: #065f46;
+      }
+      
+      .status-beta {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      
+      .launch-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        margin-top: 16px;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .launch-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+      
+      .stats-section {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        margin: 40px 20px;
+        padding: 32px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        text-align: center;
+      }
+      
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 24px;
+        margin-top: 24px;
+      }
+      
+      .stat-item {
+        text-align: center;
+      }
+      
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 0;
+        background: linear-gradient(45deg, #ffffff, #e2e8f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .stat-label {
+        font-size: 0.9rem;
+        margin: 8px 0 0;
+        opacity: 0.8;
+      }
+      
+      .footer {
+        background: rgba(0, 0, 0, 0.1);
+        color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        padding: 24px;
+        font-size: 0.9rem;
+      }
+      
+      .loading-spinner {
+        display: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      .card-loading .loading-spinner {
+        display: block;
+      }
+      
+      .card-loading .launch-button {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+        
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+          padding: 16px;
+        }
+        
+        .dashboard-card {
+          padding: 24px;
+        }
+        
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero-section">
+      <h1 class="hero-title">🍼 Breastfeeding Pumps</h1>
+      <p class="hero-subtitle">Content Intelligence Dashboard Suite</p>
+      <p class="hero-description">
+        Explore comprehensive analytics and insights for the breastfeeding pump market 
+        through multiple specialized visualization dashboards.
+      </p>
+    </header>
+
+    <main>
+      <div class="dashboard-grid" id="dashboardGrid">
+        <!-- Dashboard cards will be populated by JavaScript -->
+          </div>
+
+      <section class="stats-section">
+        <h3 style="margin: 0 0 8px; font-size: 1.4rem; font-weight: 600;">Data Overview</h3>
+        <p style="margin: 0; opacity: 0.8;">Comprehensive analysis across multiple data sources</p>
+        
+        <div class="stats-grid" id="statsGrid">
+          <!-- Stats will be populated by JavaScript -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2025 TBWA. Source: Pathmatics, Brand Manufacturer segment. Timeframe: Jan 2024 – Jul 2025.</p>
+    </footer>
+
+    <script type="module">
+      import { DASHBOARD_REGISTRY, DATA_CONFIG, dashboardManager, analytics } from './config/dashboards.js';
+
+      // Initialize the dashboard selector
+      async function init() {
+        try {
+          await loadDashboardStats();
+          renderDashboards();
+          renderStats();
+          setupAnalytics();
+        } catch (error) {
+          console.error('Failed to initialize dashboard selector:', error);
+        }
+      }
+
+      // Load dashboard statistics
+      async function loadDashboardStats() {
+        // In a real implementation, this would fetch actual data stats
+        // For now, we'll use mock data
+        return new Promise(resolve => {
+          setTimeout(() => {
+            window.dashboardStats = {
+              totalRecords: 127483,
+              dataSources: 4,
+              timeRange: '18 months',
+              lastUpdated: new Date().toLocaleDateString()
+            };
+            resolve();
+          }, 500);
+        });
+      }
+
+      // Render dashboard cards
+      function renderDashboards() {
+        const grid = document.getElementById('dashboardGrid');
+        const dashboards = Object.entries(DASHBOARD_REGISTRY)
+          .filter(([id, config]) => config.status === 'active');
+
+        grid.innerHTML = dashboards.map(([id, config]) => `
+          <div class="dashboard-card" data-dashboard="${id}">
+            <span class="dashboard-icon">${config.icon}</span>
+            <h2 class="dashboard-title">${config.name}</h2>
+            <p class="dashboard-description">${config.description}</p>
+            
+            <div class="dashboard-features">
+              <h4>Key Features</h4>
+              <ul class="feature-list">
+                ${config.features.slice(0, 4).map(feature => 
+                  `<li class="feature-item">${feature}</li>`
+                ).join('')}
+              </ul>
+            </div>
+            
+            <div class="dashboard-meta">
+              <span class="dashboard-version">v${config.version}</span>
+              <span class="dashboard-status status-${config.status}">${config.status.toUpperCase()}</span>
+        </div>
+
+            <button class="launch-button" onclick="launchDashboard('${id}')">
+              <span>Launch Dashboard</span>
+              <span class="loading-spinner"></span>
+            </button>
+          </div>
+        `).join('');
+      }
+
+      // Render statistics
+      function renderStats() {
+        const statsGrid = document.getElementById('statsGrid');
+        const stats = window.dashboardStats;
+
+        statsGrid.innerHTML = `
+          <div class="stat-item">
+            <div class="stat-number">${stats.totalRecords.toLocaleString()}</div>
+            <div class="stat-label">Total Records</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${stats.dataSources}</div>
+            <div class="stat-label">Data Sources</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${stats.timeRange}</div>
+            <div class="stat-label">Time Range</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${Object.keys(DASHBOARD_REGISTRY).length}</div>
+            <div class="stat-label">Dashboards</div>
+          </div>
+        `;
+      }
+
+      // Launch dashboard with loading state
+      window.launchDashboard = function(dashboardId) {
+        const card = document.querySelector(`[data-dashboard="${dashboardId}"]`);
+        const dashboard = DASHBOARD_REGISTRY[dashboardId];
+        
+        if (!dashboard) {
+          console.error('Dashboard not found:', dashboardId);
+          return;
+        }
+
+        // Add loading state
+        card.classList.add('card-loading');
+        
+        // Track analytics
+        analytics.trackInteraction('dashboard_launch', { dashboardId });
+        
+        // Simulate loading delay for better UX
+        setTimeout(() => {
+          window.location.href = dashboard.path;
+        }, 800);
+      };
+
+      // Setup analytics
+      function setupAnalytics() {
+        analytics.startSession('dashboard-selector');
+        
+        // Track when user leaves the page
+        window.addEventListener('beforeunload', () => {
+          analytics.endSession();
+        });
+      }
+
+      // Add some interactive effects
+      document.addEventListener('DOMContentLoaded', () => {
+        // Add hover effects to cards
+        const cards = document.querySelectorAll('.dashboard-card');
+        cards.forEach(card => {
+          card.addEventListener('mouseenter', () => {
+            analytics.trackInteraction('card_hover', { 
+              dashboardId: card.dataset.dashboard 
+            });
+          });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && e.target.classList.contains('dashboard-card')) {
+            const dashboardId = e.target.dataset.dashboard;
+            launchDashboard(dashboardId);
+          }
+        });
+      });
+
+      // Initialize when page loads
+      init();
+    </script>
+  </body>
+  </html>

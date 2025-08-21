@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bubbles Dashboard - Breastfeeding Pumps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../shared/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">🍼</div>
+        <div class="title">
+          <h1>Breastfeeding Pumps Dashboard - Bubbles View</h1>
+          <p>Content analysis of digital creatives (Jan 2024 – Jul 2025)</p>
+        </div>
+      </div>
+      <nav class="tabs">
+        <a class="tab active" data-tab="bubble-images">Manufacturer Brands</a>
+        <a class="tab" data-tab="dme-brands">DME Brands</a>
+        <a class="tab" data-tab="tiktok-sm">TikTok SM</a>
+        <a class="tab" data-tab="instagram-sm">Instagram SM</a>
+        <a class="tab" data-tab="content-analysis">Content Analysis</a>
+        <a class="tab" data-tab="bubble-landscape">Bubble Landscape</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section id="content-analysis" class="tab-panel">
+        <div class="panel-header">
+          <h2>Content Analysis</h2>
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilter">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilter">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Advertiser
+              <select id="advertiserFilter">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="viz-and-legend">
+          <div id="mosaic" class="viz"></div>
+          <aside class="legend">
+            <h3>Legend</h3>
+            <div class="legend-row">
+              <span class="legend-swatch area"></span>
+              <span>Area ∝ Impressions</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-swatch stroke"></span>
+              <span>Stroke intensity ∝ Spend (USD)</span>
+            </div>
+            <div class="legend-gradient">
+              <span>Lower Spend</span>
+              <div class="gradient-bar"></div>
+              <span>Higher Spend</span>
+            </div>
+            <div class="note">Hover tiles for details. Click a main tile title to collapse/expand.</div>
+          </aside>
+        </div>
+
+        <section class="insights">
+          <h3>Insights</h3>
+          <div id="insights"></div>
+        </section>
+      </section>
+
+      <section id="bubble-landscape" class="tab-panel">
+        <div class="panel-header">
+          <h2>Bubble Landscape</h2>
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilter2">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilter2">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Advertiser
+              <select id="advertiserFilter2">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="viz-and-legend">
+          <div id="bubble" class="viz"></div>
+          <aside class="legend">
+            <h3>Legend</h3>
+            <div class="legend-row"><span class="legend-swatch area"></span><span>Bubble size ∝ Impressions</span></div>
+            <div class="legend-row"><span class="legend-swatch stroke"></span><span>Gradient intensity ∝ Spend (USD)</span></div>
+            <div class="note">Floating translucent clusters: Main categories (outer), sub-categories (middle), advertisers (inner)</div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="bubble-images" class="tab-panel active">
+        <div class="panel-header">
+          <h2>Bubble Images</h2>
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilter3">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilter3">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Advertiser
+              <select id="advertiserFilter3">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row"><span class="legend-swatch area"></span><span>Bubble size ∝ Impressions</span></div>
+          <div class="legend-row"><span class="legend-swatch stroke"></span><span>Pastel color groups by Main Category</span></div>
+          <div class="note">Zoom with wheel/pinch, drag to pan. Click an advertiser bubble or a main label to explore. Double‑click to reset.</div>
+        </div>
+
+        <div class="cat-filter" style="margin:8px 0 6px; color:#475569; font-size:12px;">
+          <div style="margin-bottom:6px; font-weight:600;">Filter by Main Category</div>
+          <div id="mainFilter" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+        </div>
+
+        <div class="viz-only"><div id="bubbleImages" class="viz"></div></div>
+
+        <div class="viz-footer" style="margin-top:10px; display:flex; align-items:center; gap:8px; color:#475569; font-size:12px;">
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <input id="hideNR" type="checkbox" checked />
+            <span>Hide "Not Recognizable" main category</span>
+          </label>
+        </div>
+
+        <section id="takeaway-panel" class="insight-panel">
+          <h3 id="takeaway-title">Key takeaways</h3>
+          <div id="selection-takeaway" class="selection-analysis"></div>
+        </section>
+
+        <section id="insight-panel" class="insight-panel">
+          <h3 id="insight-title">Click a bubble or a main label above to generate a brief creative analysis</h3>
+          <div id="selection-analysis" class="selection-analysis"></div>
+          <div id="selection-gallery" class="selection-gallery"></div>
+        </section>
+      </section>
+
+      <section id="dme-brands" class="tab-panel">
+        <div class="panel-header">
+          <h2>DME Brands</h2>
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilter4">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilter4">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Advertiser
+              <select id="advertiserFilter4">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row"><span class="legend-swatch area"></span><span>Bubble size ∝ Impressions</span></div>
+          <div class="legend-row"><span class="legend-swatch stroke"></span><span>Pastel color groups by Main Category</span></div>
+          <div class="note">Zoom with wheel/pinch, drag to pan. Click an advertiser bubble or a main label to explore. Double‑click to reset.</div>
+        </div>
+
+        <div class="cat-filter" style="margin:8px 0 6px; color:#475569; font-size:12px;">
+          <div style="margin-bottom:6px; font-weight:600;">Filter by Main Category</div>
+          <div id="mainFilterDME" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+        </div>
+
+        <div class="viz-only"><div id="bubbleImagesDME" class="viz"></div></div>
+
+        <div class="viz-footer" style="margin-top:10px; display:flex; align-items:center; gap:8px; color:#475569; font-size:12px;">
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <input id="hideNR_DME" type="checkbox" />
+            <span>Hide "Not Recognizable" main category</span>
+          </label>
+        </div>
+
+        <section id="takeaway-panel-dme" class="insight-panel">
+          <h3 id="takeaway-title-dme">Key takeaways</h3>
+          <div id="selection-takeaway-dme" class="selection-analysis"></div>
+        </section>
+
+        <section id="insight-panel-dme" class="insight-panel">
+          <h3 id="insight-title-dme">Click a bubble or a main label above to generate a brief creative analysis</h3>
+          <div id="selection-analysis-dme" class="selection-analysis"></div>
+          <div id="selection-gallery-dme" class="selection-gallery"></div>
+        </section>
+      </section>
+
+      <section id="tiktok-sm" class="tab-panel">
+        <div class="panel-header">
+          <h2>TikTok SM</h2>
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilter5">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilter5">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Company
+              <select id="advertiserFilter5">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row"><span class="legend-swatch area"></span><span>Bubble size ∝ Engagement Total</span></div>
+          <div class="legend-row"><span class="legend-swatch stroke"></span><span>Pastel color groups by Main Category</span></div>
+          <div class="note">Zoom with wheel/pinch, drag to pan. Click a company bubble or a main label to explore. Double‑click to reset.</div>
+        </div>
+
+        <div class="cat-filter" style="margin:8px 0 6px; color:#475569; font-size:12px;">
+          <div style="margin-bottom:6px; font-weight:600;">Filter by Main Category</div>
+          <div id="mainFilterTikTok" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+        </div>
+
+        <div class="viz-only"><div id="bubbleImagesTikTok" class="viz"></div></div>
+
+        <div class="viz-footer" style="margin-top:10px; display:flex; align-items:center; gap:8px; color:#475569; font-size:12px;">
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <input id="hideNR_TikTok" type="checkbox" />
+            <span>Hide "Not Recognizable" main category</span>
+          </label>
+        </div>
+
+        <section id="takeaway-panel-tiktok" class="insight-panel">
+          <h3 id="takeaway-title-tiktok">Key takeaways</h3>
+          <div id="selection-takeaway-tiktok" class="selection-analysis"></div>
+        </section>
+
+        <section id="insight-panel-tiktok" class="insight-panel">
+          <h3 id="insight-title-tiktok">Click a bubble or a main label above to generate a brief creative analysis</h3>
+          <div id="selection-analysis-tiktok" class="selection-analysis"></div>
+          <div id="selection-gallery-tiktok" class="selection-gallery"></div>
+        </section>
+      </section>
+
+      <!-- Instagram SM Panel -->
+      <section id="instagram-sm" class="tab-panel">
+        <div class="sub-header">
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilter6">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilter6">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Company
+              <select id="advertiserFilter6">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row"><span class="legend-swatch area"></span><span>Bubble size ∝ Engagement Total</span></div>
+          <div class="legend-row"><span class="legend-swatch stroke"></span><span>Pastel color groups by Main Category</span></div>
+          <div class="note">Zoom with wheel/pinch, drag to pan. Click a company bubble or a main label to explore. Double‑click to reset.</div>
+        </div>
+
+        <div class="cat-filter" style="margin:8px 0 6px; color:#475569; font-size:12px;">
+          <div style="margin-bottom:6px; font-weight:600;">Filter by Main Category</div>
+          <div id="mainFilterInstagram" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+        </div>
+
+        <div class="viz-only"><div id="bubbleImagesInstagram" class="viz"></div></div>
+
+        <div class="viz-footer" style="margin-top:10px; display:flex; align-items:center; gap:8px; color:#475569; font-size:12px;">
+          <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <input id="hideNR_Instagram" type="checkbox" />
+            <span>Hide "Not Recognizable" main category</span>
+          </label>
+        </div>
+
+        <section id="takeaway-panel-instagram" class="insight-panel">
+          <h3 id="takeaway-title-instagram">Key takeaways</h3>
+          <div id="selection-takeaway-instagram" class="selection-analysis"></div>
+        </section>
+
+        <section id="insight-panel-instagram" class="insight-panel">
+          <h3 id="insight-title-instagram">Click a bubble or a main label above to generate a brief creative analysis</h3>
+          <div id="selection-analysis-instagram" class="selection-analysis"></div>
+          <div id="selection-gallery-instagram" class="selection-gallery"></div>
+        </section>
+      </section>
+
+      
+    </main>
+
+    <footer class="app-footer">
+      <span>Source: Pathmatics, Brand Manufacturer segment. Timeframe: Jan 2024 – Jul 2025.</span>
+    </footer>
+
+    <script type="module" src="../shared/js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TBWA/Philips - Breastfeeding Pumps Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../shared/css/main.css" />
+    <link rel="stylesheet" href="css/packed-circle.css" />
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- amCharts 4 for ForceDirected packed circles style -->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/plugins/forceDirected.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">🔵</div>
+        <div class="title">
+          <h1>TBWA/Philips - Breastfeeding Pumps Dashboard</h1>
+          <p>Content analysis with hierarchical packed circle visualization (Jan 2024 – Jul 2025)</p>
+        </div>
+      </div>
+              <nav class="tabs">
+          <a class="tab active" data-tab="blended-circles">Blended Analysis</a>
+        </nav>
+    </header>
+
+    <main class="container">
+              <!-- Manufacturer Brands Panel -->
+        <section id="manufacturer-circles" class="tab-panel" style="display: none;">
+        <div class="panel-header">
+          <h2>Manufacturer Brands - Packed Circles</h2>
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilterManufacturer">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilterManufacturer">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Advertiser
+              <select id="advertiserFilterManufacturer">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Visualization Mode
+              <select id="vizModeManufacturer">
+                <option value="amcharts" selected>amCharts Force-Directed</option>
+                <option value="nested">Nested Circles</option>
+                <option value="force">Force Layout</option>
+                <option value="grid">Grid Layout</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row">
+            <span class="legend-swatch circle-size"></span>
+            <span>Circle size ∝ Impressions</span>
+          </div>
+        </div>
+
+        <div class="cat-filter" style="margin:8px 0 6px; color:#475569; font-size:12px;">
+          <div style="margin-bottom:6px; font-weight:600;">Filter by Main Category</div>
+          <div id="mainFilterManufacturer" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+        </div>
+
+        <div class="viz-only">
+          <div id="packedCirclesManufacturer" class="viz packed-viz"></div>
+        </div>
+
+        
+
+        <section id="insight-panel-manufacturer" class="insight-panel">
+          <h3 id="insight-title-manufacturer">Click a circle to explore detailed insights</h3>
+          <div id="selection-analysis-manufacturer" class="selection-analysis"></div>
+          <div id="selection-gallery-manufacturer" class="selection-gallery"></div>
+        </section>
+      </section>
+
+              <!-- DME Brands Panel -->
+        <section id="dme-circles" class="tab-panel" style="display: none;">
+        <div class="panel-header">
+          <h2>DME Brands - Packed Circles</h2>
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilterDME">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilterDME">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Advertiser
+              <select id="advertiserFilterDME">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Visualization Mode
+              <select id="vizModeDME">
+                <option value="amcharts" selected>amCharts Force-Directed</option>
+                <option value="nested">Nested Circles</option>
+                <option value="force">Force Layout</option>
+                <option value="grid">Grid Layout</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row">
+            <span class="legend-swatch circle-size"></span>
+            <span>Circle size ∝ Impressions</span>
+          </div>
+        </div>
+
+        <div class="cat-filter" style="margin:8px 0 6px; color:#475569; font-size:12px;">
+          <div style="margin-bottom:6px; font-weight:600;">Filter by Main Category</div>
+          <div id="mainFilterDME" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+        </div>
+
+        <div class="viz-only">
+          <div id="packedCirclesDME" class="viz packed-viz"></div>
+        </div>
+
+        <section id="insight-panel-dme" class="insight-panel">
+          <h3 id="insight-title-dme">Click a circle to explore detailed insights</h3>
+          <div id="selection-analysis-dme" class="selection-analysis"></div>
+          <div id="selection-gallery-dme" class="selection-gallery"></div>
+        </section>
+      </section>
+
+              <!-- Social Media Panel -->
+        <section id="social-circles" class="tab-panel" style="display: none;">
+        <div class="panel-header">
+          <h2>Social Media - Packed Circles</h2>
+          <div class="controls">
+            <label>
+              Platform
+              <select id="platformFilter">
+                <option value="all" selected>All Platforms</option>
+                <option value="tiktok">TikTok Only</option>
+                <option value="instagram">Instagram Only</option>
+              </select>
+            </label>
+            <label>
+              Product Focus
+              <select id="focusFilterSocial">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Company
+              <select id="companyFilterSocial">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Visualization Mode
+              <select id="vizModeSocial">
+                <option value="amcharts" selected>amCharts Force-Directed</option>
+                <option value="nested">Nested Circles</option>
+                <option value="force">Force Layout</option>
+                <option value="split">Split by Platform</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row">
+            <span class="legend-swatch circle-size"></span>
+            <span>Circle size ∝ Engagement Total</span>
+          </div>
+          <div class="legend-row">
+            <span class="legend-swatch circle-color"></span>
+            <span>Color represents Platform</span>
+          </div>
+          <div class="legend-row">
+            <span class="legend-swatch circle-stroke"></span>
+            <span>Border intensity ∝ Engagement Rate</span>
+          </div>
+          <div class="note">Hover for engagement metrics. Click to see content details.</div>
+        </div>
+
+        <div class="viz-only">
+          <div id="packedCirclesSocial" class="viz packed-viz"></div>
+        </div>
+
+        <section id="insight-panel-social" class="insight-panel">
+          <h3 id="insight-title-social">Click a circle to explore social media insights</h3>
+          <div id="selection-analysis-social" class="selection-analysis"></div>
+          <div id="selection-gallery-social" class="selection-gallery"></div>
+        </section>
+      </section>
+
+              <!-- Blended Analysis Panel -->
+        <section id="blended-circles" class="tab-panel active">
+        <div class="panel-header">
+          <h2>Blended Analysis</h2>
+          <div class="controls">
+            <label>
+              Product Focus
+              <select id="focusFilterBlended">
+                <option value="all">All products</option>
+                <option value="Breastfeeding Pump" selected>Breastfeeding Pump only</option>
+              </select>
+            </label>
+            <label>
+              Channel
+              <select id="channelFilterBlended">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Advertiser
+              <select id="advertiserFilterBlended">
+                <option value="all" selected>All</option>
+              </select>
+            </label>
+            <label>
+              Advertiser by Group
+              <select id="groupFilterBlended">
+                <option value="all" selected>All</option>
+                <option value="manufacturer">Manufacturer Brands</option>
+                <option value="dme">DME Brands</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row">
+            <span class="legend-swatch circle-size"></span>
+            <span>Circle size ∝ Impressions</span>
+          </div>
+          <div class="note">Brand Root nodes colored by source tone: lighter = Manufacturer, darker = DME</div>
+        </div>
+
+        <div class="cat-filter" style="margin:8px 0 6px; color:#475569; font-size:12px;">
+          <div style="margin-bottom:6px; font-weight:600;">Filter by Main Category</div>
+          <div id="mainFilterBlended" style="display:flex; flex-wrap:wrap; gap:10px;"></div>
+        </div>
+
+        <div class="viz-only">
+          <div id="packedCirclesBlended" class="viz packed-viz"></div>
+        </div>
+
+        <!-- New blended components layout -->
+        <section id="blended-panels" class="blended-panels">
+          <div id="bp-title" class="bp-title">Select a category, brand, or channel</div>
+
+          <div id="bp-takeaways" class="bp-card">
+            <h4>Key takeaways</h4>
+            <div class="bp-body" id="bp-takeaways-body"></div>
+          </div>
+
+          <div id="bp-quotes" class="bp-card">
+            <h4>Supporting quotes</h4>
+            <ul id="bp-quotes-list" class="bp-list"></ul>
+          </div>
+
+          <div id="bp-metrics" class="bp-metrics span-2">
+            <div class="metric" id="bp-spend"><div class="label">Total Spend</div><div class="value">$0</div><div class="hint"></div></div>
+            <div class="metric" id="bp-impr"><div class="label">Total Impressions</div><div class="value">0</div></div>
+            <div class="metric" id="bp-eng"><div class="label">Total Engagement</div><div class="value">0</div></div>
+            <div class="metric" id="bp-ads-count"><div class="label">Ads count</div><div class="value">0</div></div>
+            <div class="metric" id="bp-posts-count"><div class="label">SM posts</div><div class="value">0</div></div>
+          </div>
+
+          <div id="bp-top-ads" class="bp-card bp-left">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <h4 style="margin:0;">Top Ads by Impressions</h4>
+              <button id="bp-ads-more" class="link-btn" type="button">Show top 50</button>
+            </div>
+            <div class="gallery" id="bp-top-ads-gallery"></div>
+          </div>
+
+          <div id="bp-top-social" class="bp-card bp-right">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <h4 style="margin:0;">Top Social by Engagement</h4>
+              <button id="bp-social-more" class="link-btn" type="button">Show top 50</button>
+            </div>
+            <div class="gallery" id="bp-top-social-gallery"></div>
+          </div>
+
+          <div id="bp-ads-analysis" class="bp-card bp-left">
+            <h4>Ads analysis</h4>
+            <div class="bp-body" id="bp-ads-analysis-body"></div>
+          </div>
+
+          <div id="bp-social-analysis" class="bp-card bp-right">
+            <h4>Social analysis</h4>
+            <div class="bp-body" id="bp-social-analysis-body"></div>
+          </div>
+
+          <div id="bp-ads-mix" class="bp-card bp-left">
+            <h4>Ads mix</h4>
+            <div class="bp-body" id="bp-ads-mix-body"></div>
+          </div>
+
+          <div id="bp-social-mix" class="bp-card bp-right">
+            <h4>Social mix</h4>
+            <div class="bp-body" id="bp-social-mix-body"></div>
+          </div>
+        </section>
+      </section>
+
+              <!-- Comparative View Panel -->
+        <section id="comparative-circles" class="tab-panel" style="display: none;">
+        <div class="panel-header">
+          <h2>Comparative Analysis - Multi-Circle View</h2>
+          <div class="controls">
+            <label>
+              Compare By
+              <select id="compareBy">
+                <option value="data-source" selected>Data Source</option>
+                <option value="main-category">Main Category</option>
+                <option value="time-period">Time Period</option>
+              </select>
+            </label>
+            <label>
+              Layout
+              <select id="compareLayout">
+                <option value="side-by-side" selected>Side by Side</option>
+                <option value="overlay">Overlay</option>
+                <option value="matrix">Matrix</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="legend legend-inline">
+          <div class="legend-row">
+            <span class="legend-swatch circle-size"></span>
+            <span>Circle size represents primary metric</span>
+          </div>
+          <div class="legend-row">
+            <span class="legend-swatch circle-color"></span>
+            <span>Color represents comparison dimension</span>
+          </div>
+          <div class="note">Compare metrics across different data sources or categories.</div>
+        </div>
+
+        <div class="viz-only">
+          <div id="packedCirclesComparative" class="viz packed-viz comparative-viz"></div>
+        </div>
+
+        <section id="insight-panel-comparative" class="insight-panel">
+          <h3 id="insight-title-comparative">Comparative insights will appear here</h3>
+          <div id="selection-analysis-comparative" class="selection-analysis"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>Source: Pathmatics, Brand Manufacturer segment. Timeframe: Jan 2024 – Jul 2025.</span>
+    </footer>
+
+    <script type="module" src="js/packed-circle-app.js"></script>
+  </body>
+</html>

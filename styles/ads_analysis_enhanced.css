@@ -1,0 +1,316 @@
+/* Enhanced Ads Analysis Component Styles */
+
+.enhanced-ads-analysis {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.analysis-section {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.analysis-section h4 {
+    margin: 0 0 0.75rem 0;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.analysis-section p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+.analysis-section strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Top Ad Example Styles */
+.top-ad-example {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    margin-top: 0.5rem;
+}
+
+.top-ad-example p {
+    margin: 0.5rem 0;
+}
+
+.top-ad-example em {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.top-ad-example small {
+    color: #868e96;
+    font-size: 0.85rem;
+}
+
+/* Recommendations Styles */
+.analysis-section ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.analysis-section li {
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 6px;
+    border-left: 3px solid;
+}
+
+.recommendation-high {
+    border-left-color: #dc3545;
+    background: linear-gradient(90deg, #fff5f5 0%, #ffffff 100%);
+}
+
+.recommendation-medium {
+    border-left-color: #ffc107;
+    background: linear-gradient(90deg, #fffbf0 0%, #ffffff 100%);
+}
+
+.recommendation-low {
+    border-left-color: #28a745;
+    background: linear-gradient(90deg, #f0fff4 0%, #ffffff 100%);
+}
+
+/* Top Ads Gallery Styles */
+.top-ads-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.ad-card {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ad-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.ad-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.ad-rank {
+    background: rgba(255,255,255,0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.ad-brand {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.ad-impressions {
+    background: rgba(255,255,255,0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.ad-content {
+    padding: 1rem;
+}
+
+.ad-text {
+    color: #495057;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+.ad-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.metric {
+    background: #f8f9fa;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #6c757d;
+    text-align: center;
+    border: 1px solid #e9ecef;
+}
+
+.ad-category {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid #bbdefb;
+}
+
+/* Performance Metrics Highlight */
+.performance-highlight {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.performance-highlight h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.performance-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.metric-item {
+    text-align: center;
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* Theme Analysis Styles */
+.theme-analysis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.theme-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    text-align: center;
+}
+
+.theme-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.theme-count {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 0.25rem;
+}
+
+.theme-percentage {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .top-ads-gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .ad-metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .performance-metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .theme-analysis {
+        grid-template-columns: 1fr;
+    }
+    
+    .ad-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Animation for loading states */
+.enhanced-ads-analysis.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.enhanced-ads-analysis.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Print styles */
+@media print {
+    .enhanced-ads-analysis {
+        background: white;
+        color: black;
+    }
+    
+    .analysis-section {
+        background: white;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+    }
+    
+    .ad-card {
+        page-break-inside: avoid;
+        border: 1px solid #ccc;
+    }
+}

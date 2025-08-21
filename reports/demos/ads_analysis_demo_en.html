@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ads Analysis - Best Performance</title>
+    <link rel="stylesheet" href="styles/ads_analysis_enhanced.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        .performance-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .performance-summary h2 {
+            margin: 0 0 20px 0;
+            font-size: 2rem;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .metric-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ads Analysis - Best Performance</h1>
+            <p>Detailed analysis of the best performing ads in the breastfeeding pump market</p>
+        </div>
+
+        <div class="performance-summary">
+            <h2>Performance Summary</h2>
+            <p>Analysis based on 4,279 ads from 12 major brands</p>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="metric-value">3.8B</span>
+                    <span class="metric-label">Total Impressions</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">$6.74</span>
+                    <span class="metric-label">Average CPM</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">12</span>
+                    <span class="metric-label">Brands Analyzed</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">91.7M</span>
+                    <span class="metric-label">Best Ad (Impressions)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enhanced-ads-analysis">
+            <div class="analysis-section">
+                <h4>🎯 Top Ads by Impressions</h4>
+                <p>The ads with the highest reach in the breastfeeding pump market:</p>
+                
+                <div class="top-ads-gallery">
+                    <div class="ad-card">
+                        <div class="ad-header">
+                            <span class="ad-rank">#1</span>
+                            <span class="ad-brand">Dr. Brown's</span>
+                            <span class="ad-impressions">91.7M impressions</span>
+                        </div>
+                        <div class="ad-content">
+                            <p class="ad-text">"I'm excited to be recommending Good Start® | Dr. Brown's™ Soothe Pro formula to help ease your baby's tummy troubles."</p>
+                            <div class="ad-metrics">
+                                <span class="metric">Spend: $618,600</span>
+                                <span class="metric">CPM: $6.74</span>
+                                <span class="metric">Channel: Facebook</span>
+                                <span class="metric">Format: Video</span>
+                            </div>
+                            <div class="ad-category">Category: Medical Endorsement & Clinical Trust</div>
+                        </div>
+                    </div>
+
+                    <div class="ad-card">
+                        <div class="ad-header">
+                            <span class="ad-rank">#2</span>
+                            <span class="ad-brand">Elvie</span>
+                            <span class="ad-impressions">38.5M impressions</span>
+                        </div>
+                        <div class="ad-content">
+                            <p class="ad-text">"100% (ish)* of pumping moms say they feel like cows. That's a no from us—It's time to cut the cords and seize the freedom you deserve, mama."</p>
+                            <div class="ad-metrics">
+                                <span class="metric">Spend: $281,700</span>
+                                <span class="metric">CPM: $7.32</span>
+                                <span class="metric">Channel: Facebook</span>
+                                <span class="metric">Format: Video</span>
+                            </div>
+                            <div class="ad-category">Category: Wearable & Discreet Design</div>
+                        </div>
+                    </div>
+
+                    <div class="ad-card">
+                        <div class="ad-header">
+                            <span class="ad-rank">#3</span>
+                            <span class="ad-brand">Momcozy</span>
+                            <span class="ad-impressions">13.3M impressions</span>
+                        </div>
+                        <div class="ad-content">
+                            <p class="ad-text">"MOMCOZY Cuddle On The Go 5% off coupon Momcozy Baby Carrier Newborn to Toddler - Ergonomic, Cozy and Lightweight Infant Carrier"</p>
+                            <div class="ad-metrics">
+                                <span class="metric">Spend: $16,390</span>
+                                <span class="metric">CPM: $1.23</span>
+                                <span class="metric">Channel: Desktop Display</span>
+                                <span class="metric">Format: Image</span>
+                            </div>
+                            <div class="ad-category">Category: Wearable & Discreet Design</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <h4>📊 Content Theme Analysis</h4>
+                <p>The most effective themes in top performing ads:</p>
+                
+                <div class="theme-analysis">
+                    <div class="theme-card">
+                        <div class="theme-name">Comfort/Soothing</div>
+                        <div class="theme-count">6</div>
+                        <div class="theme-percentage">30% of top ads</div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-name">Value/Promotion</div>
+                        <div class="theme-count">5</div>
+                        <div class="theme-percentage">25% of top ads</div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-name">Education/How-to</div>
+                        <div class="theme-count">4</div>
+                        <div class="theme-percentage">20% of top ads</div>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-name">Wearable/Portability</div>
+                        <div class="theme-count">4</div>
+                        <div class="theme-percentage">20% of top ads</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <h4>🏆 Brands with Best Performance</h4>
+                <p>Brand ranking by total impressions:</p>
+                
+                <div class="top-ads-gallery">
+                    <div class="ad-card">
+                        <div class="ad-header">
+                            <span class="ad-rank">#1</span>
+                            <span class="ad-brand">Momcozy</span>
+                            <span class="ad-impressions">958.6M impressions</span>
+                        </div>
+                        <div class="ad-content">
+                            <p class="ad-text">Leader in ad volume with value and promotion focus</p>
+                            <div class="ad-metrics">
+                                <span class="metric">Total Ads: 1,547</span>
+                                <span class="metric">Avg CPM: $6.74</span>
+                                <span class="metric">Strategy: Value-driven</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ad-card">
+                        <div class="ad-header">
+                            <span class="ad-rank">#2</span>
+                            <span class="ad-brand">Dr. Brown's</span>
+                            <span class="ad-impressions">947.2M impressions</span>
+                        </div>
+                        <div class="ad-content">
+                            <p class="ad-text">Focus on medical authority and clinical trust</p>
+                            <div class="ad-metrics">
+                                <span class="metric">Total Ads: 273</span>
+                                <span class="metric">Avg CPM: $6.74</span>
+                                <span class="metric">Strategy: Medical authority</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ad-card">
+                        <div class="ad-header">
+                            <span class="ad-rank">#3</span>
+                            <span class="ad-brand">Elvie</span>
+                            <span class="ad-impressions">550.7M impressions</span>
+                        </div>
+                        <div class="ad-content">
+                            <p class="ad-text">Technological innovation and discreet design</p>
+                            <div class="ad-metrics">
+                                <span class="metric">Total Ads: 772</span>
+                                <span class="metric">Avg CPM: $7.32</span>
+                                <span class="metric">Strategy: Premium tech</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <h4>💡 Strategic Recommendations</h4>
+                <ul>
+                    <li class="recommendation-high">
+                        <strong>Focus on "Comfort/Soothing" as the main theme</strong><br>
+                        <em>Action:</em> Develop more variations of this theme with clear benefits and proof points
+                    </li>
+                    <li class="recommendation-medium">
+                        <strong>Facebook Video is the most effective format</strong><br>
+                        <em>Action:</em> Optimize creatives for this format while testing adjacent formats
+                    </li>
+                    <li class="recommendation-high">
+                        <strong>Average CPM of $6.74 is in line with benchmarks</strong><br>
+                        <em>Action:</em> Maintain this efficiency while scaling reach
+                    </li>
+                    <li class="recommendation-medium">
+                        <strong>Dr. Brown's has the most successful individual ad</strong><br>
+                        <em>Action:</em> Study their medical authority approach to apply to other brands
+                    </li>
+                </ul>
+            </div>
+
+            <div class="analysis-section">
+                <h4>🎯 Key Insights</h4>
+                <div class="top-ad-example">
+                    <p><strong>1. Medical Authority Works:</strong> Dr. Brown's most successful ad (91.7M impressions) focuses on medical recommendations and clinical trust.</p>
+                    <p><strong>2. Video Dominates:</strong> Facebook video ads generate the highest reach and engagement.</p>
+                    <p><strong>3. Value vs. Premium:</strong> Momcozy leads in volume with value strategy, while Elvie dominates in premium with innovative technology.</p>
+                    <p><strong>4. Emotional Themes:</strong> Comfort and wellness themes resonate more than purely functional ones.</p>
+                    <p><strong>5. Cost Efficiency:</strong> Average CPM of $6.74 indicates a competitive but efficient market.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to ad cards
+            const adCards = document.querySelectorAll('.ad-card');
+            adCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                });
+            });
+
+            // Add click effects to theme cards
+            const themeCards = document.querySelectorAll('.theme-card');
+            themeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const themeName = this.querySelector('.theme-name').textContent;
+                    alert(`Selected theme: ${themeName}\nThis theme appears in ${this.querySelector('.theme-count').textContent} of the top performing ads.`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
