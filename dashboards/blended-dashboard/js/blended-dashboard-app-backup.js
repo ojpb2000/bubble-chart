@@ -15,7 +15,7 @@ let state = {
         channel: 'all',
         advertiser: 'all'
     },
-    currentTab: 'd3-tab'
+    currentTab: 'blended-circles'
 };
 
 // Data normalization layer for v2 compatibility
@@ -203,7 +203,7 @@ async function loadData() {
         
     } catch (error) {
         console.error('Error loading data:', error);
-        document.getElementById('d3-visualization').innerHTML = '<p>Error loading data. Please check the console for details.</p>';
+        document.getElementById('visualization').innerHTML = '<p>Error loading data. Please check the console for details.</p>';
     }
 }
 
@@ -359,29 +359,18 @@ function buildHierarchy(data) {
     return hierarchy;
 }
 
-// Render the visualization based on current tab
+// Render the visualization
 function render() {
     const filteredData = applyFilters();
+    const hierarchy = buildHierarchy(filteredData);
     
-    console.log('Rendering with current tab:', state.currentTab);
+    console.log('Rendering hierarchy:', hierarchy);
     
     // Update analysis components
     updateAnalysisComponents(filteredData);
     
-    // Render based on current tab
-    if (state.currentTab === 'd3-tab') {
-        // Clear and render D3 visualization
-        document.getElementById('d3-visualization').innerHTML = '';
-        const hierarchy = buildHierarchy(filteredData);
-        console.log('Rendering D3 hierarchy:', hierarchy);
-        renderD3Visualization('d3-visualization', hierarchy);
-    } else if (state.currentTab === 'sankey-tab') {
-        // Clear and render Sankey diagram
-        document.getElementById('sankey-container').innerHTML = '';
-        const sankeyData = buildSankeyData(filteredData);
-        renderSankeyDiagram('sankey-container', sankeyData);
-    }
-    // Note: blended-analysis-tab doesn't need visualization rendering
+    // Render amCharts visualization
+    renderAmChartsPacked('visualization', hierarchy);
 }
 
 // Update analysis components with filtered data
@@ -409,25 +398,6 @@ function onFilterChange() {
     render();
 }
 
-// Tab switching functionality
-function switchTab(tabId) {
-    // Update active tab button
-    document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
-    
-    // Update active tab content
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    document.getElementById(tabId).classList.add('active');
-    
-    // Update state and render
-    state.currentTab = tabId;
-    render();
-}
-
 // Initialize the dashboard
 function init() {
     console.log('Initializing Blended Dashboard with v2 data support');
@@ -435,19 +405,11 @@ function init() {
     // Load data
     loadData();
     
-    // Setup event listeners for filters
+    // Setup event listeners
     document.getElementById('category-filter').addEventListener('change', onFilterChange);
     document.getElementById('product-focus-filter').addEventListener('change', onFilterChange);
     document.getElementById('channel-filter').addEventListener('change', onFilterChange);
     document.getElementById('advertiser-filter').addEventListener('change', onFilterChange);
-    
-    // Setup event listeners for tabs
-    document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tabId = btn.getAttribute('data-tab');
-            switchTab(tabId);
-        });
-    });
 }
 
 // Analysis Components
@@ -626,8 +588,8 @@ function formatNumber(num) {
     return num.toString();
 }
 
-// D3.js Force-Directed visualization (clean implementation)
-function renderD3Visualization(containerId, data) {
+// D3.js Force-Directed visualization (reliable fallback)
+function renderAmChartsPacked(containerId, data) {
     const containerElement = document.getElementById(containerId);
     if (!containerElement) {
         console.error('Container not found:', containerId);
@@ -674,17 +636,13 @@ function renderD3Visualization(containerId, data) {
         }
         
         // Create SVG
-        const width = containerElement.clientWidth || 800;
+        const width = containerElement.clientWidth;
         const height = 600;
-        
-        console.log('Container dimensions:', { width, height, clientWidth: containerElement.clientWidth });
         
         const svg = d3.select(containerElement)
             .append('svg')
             .attr('width', width)
-            .attr('height', height)
-            .style('border', '2px solid blue') // Debug border for SVG
-            .style('background', 'rgba(0,0,255,0.1)'); // Debug background for SVG
+            .attr('height', height);
         
         // Color scale
         const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -777,148 +735,6 @@ function renderD3Visualization(containerId, data) {
     } catch (error) {
         console.error('Error rendering D3 visualization:', error);
         containerElement.innerHTML = '<p>Error rendering visualization. Please check the console for details.</p>';
-    }
-}
-
-// Build Sankey diagram data
-function buildSankeyData(data) {
-    const sankeyData = [];
-    
-    // Group data by multi-theme count first
-    const byThemeCount = d3.group(data, d => d._themeCount || 1);
-    
-    // Create source nodes for theme count groups
-    byThemeCount.forEach((themeData, themeCount) => {
-        const sourceNode = `Multi-Theme (${themeCount})`;
-        
-        // Group by category within each theme count
-        const byCategory = d3.group(themeData, d => d.Main_Category);
-        
-        byCategory.forEach((categoryData, category) => {
-            // Add flow from theme count to category
-            sankeyData.push({
-                from: sourceNode,
-                to: category,
-                value: categoryData.length
-            });
-            
-            // Group by brand within category
-            const byBrand = d3.group(categoryData, d => d['Brand Root'] || d.Advertiser || d.company);
-            
-            byBrand.forEach((brandData, brand) => {
-                // Add flow from category to brand
-                sankeyData.push({
-                    from: category,
-                    to: brand,
-                    value: brandData.length
-                });
-                
-                // Group by channel within brand
-                const byChannel = d3.group(brandData, d => d.Channel);
-                
-                byChannel.forEach((channelData, channel) => {
-                    // Add flow from brand to channel
-                    sankeyData.push({
-                        from: brand,
-                        to: channel,
-                        value: channelData.length
-                    });
-                });
-            });
-        });
-    });
-    
-    console.log('Sankey data built:', sankeyData);
-    return sankeyData;
-}
-
-// Render Sankey Diagram using amCharts
-function renderSankeyDiagram(containerId, data) {
-    const containerElement = document.getElementById(containerId);
-    if (!containerElement) {
-        console.error('Sankey container not found:', containerId);
-        return;
-    }
-    
-    try {
-        // Clear container
-        containerElement.innerHTML = '';
-        
-        // Dispose any existing charts in this container
-        if (window.currentSankeyChart) {
-            window.currentSankeyChart.dispose();
-        }
-        
-        // Create chart div
-        const chartDiv = document.createElement('div');
-        chartDiv.id = 'sankey-chart';
-        chartDiv.style.width = '100%';
-        chartDiv.style.height = '600px';
-        containerElement.appendChild(chartDiv);
-        
-        // Create Sankey diagram with enhanced configuration
-        am4core.ready(function() {
-            try {
-                // Use animated theme
-                am4core.useTheme(am4themes_animated);
-                
-                // Create chart
-                var chart = am4core.create("sankey-chart", am4charts.SankeyDiagram);
-                
-                // Store reference for disposal
-                window.currentSankeyChart = chart;
-                
-                // Set data
-                chart.data = data;
-                
-                // Configure data fields
-                chart.dataFields.fromName = "from";
-                chart.dataFields.toName = "to";
-                chart.dataFields.value = "value";
-                
-                // Add padding for labels
-                chart.paddingRight = 50;
-                chart.paddingLeft = 50;
-                chart.paddingTop = 20;
-                chart.paddingBottom = 20;
-                
-                // Configure links to be thicker
-                chart.links.template.strokeWidth = 4;
-                chart.links.template.strokeOpacity = 0.8;
-                
-                // Add hover effect for links
-                let hoverState = chart.links.template.states.create("hover");
-                hoverState.properties.strokeWidth = 6;
-                hoverState.properties.strokeOpacity = 1;
-                
-                // Configure nodes
-                var nodeTemplate = chart.nodes.template;
-                nodeTemplate.inert = true;
-                nodeTemplate.readerTitle = "Click to show/hide or drag to rearrange";
-                nodeTemplate.showSystemTooltip = true;
-                nodeTemplate.cursorOverStyle = am4core.MouseCursorStyle.pointer;
-                nodeTemplate.width = 25;
-                nodeTemplate.height = 25;
-                
-                // Start with nodes collapsed
-                nodeTemplate.expanded = false;
-                
-                // Configure node labels
-                nodeTemplate.label.fontSize = 11;
-                nodeTemplate.label.wrap = false;
-                nodeTemplate.label.truncate = false;
-                
-                console.log('Sankey diagram rendered successfully with enhanced configuration');
-                
-            } catch (innerError) {
-                console.error('Error in am4core.ready:', innerError);
-                containerElement.innerHTML = '<p>Error creating Sankey diagram. Please check the console for details.</p>';
-            }
-        });
-        
-    } catch (error) {
-        console.error('Error rendering Sankey diagram:', error);
-        containerElement.innerHTML = '<p>Error rendering Sankey diagram. Please check the console for details.</p>';
     }
 }
 
