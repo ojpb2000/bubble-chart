@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Chart Dashboard - Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-panel { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .test-button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .test-button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Bubble Chart Dashboard - Debug Test</h1>
+    
+    <div class="debug-panel">
+        <h3>Debug Controls</h3>
+        <button class="test-button" onclick="testTitleUpdate()">Test Title Update</button>
+        <button class="test-button" onclick="testAnalysisUpdate()">Test Analysis Update</button>
+        <button class="test-button" onclick="checkElements()">Check DOM Elements</button>
+        <button class="test-button" onclick="clearConsole()">Clear Console</button>
+    </div>
+    
+    <div class="debug-panel">
+        <h3>Current Status</h3>
+        <div id="status">Loading...</div>
+    </div>
+    
+    <script>
+        function testTitleUpdate() {
+            console.log('Testing title update...');
+            const titleEl = document.getElementById('bp-title');
+            if (titleEl) {
+                titleEl.textContent = 'Test Title Update - ' + new Date().toLocaleTimeString();
+                console.log('Title updated successfully');
+            } else {
+                console.error('Title element not found');
+            }
+        }
+        
+        function testAnalysisUpdate() {
+            console.log('Testing analysis update...');
+            // Simulate a node click
+            const testNode = {
+                type: 'theme',
+                name: 'Test Theme',
+                data: [],
+                theme: 'test'
+            };
+            
+            if (typeof handleBlendedNodeClick === 'function') {
+                handleBlendedNodeClick(testNode);
+                console.log('Analysis update test completed');
+            } else {
+                console.error('handleBlendedNodeClick function not found');
+            }
+        }
+        
+        function checkElements() {
+            console.log('Checking DOM elements...');
+            const elements = [
+                'bp-title',
+                'bp-spend',
+                'bp-impr',
+                'bp-eng',
+                'bp-quotes-list',
+                'bp-takeaways-body',
+                'bp-top-ads-gallery',
+                'bp-top-social-gallery',
+                'bp-ads-analysis-body',
+                'bp-social-analysis-body'
+            ];
+            
+            elements.forEach(id => {
+                const el = document.getElementById(id);
+                console.log(`${id}: ${el ? 'Found' : 'NOT FOUND'}`);
+            });
+        }
+        
+        function clearConsole() {
+            console.clear();
+            console.log('Console cleared at', new Date().toLocaleTimeString());
+        }
+        
+        // Check if main dashboard is loaded
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const status = document.getElementById('status');
+                if (typeof state !== 'undefined') {
+                    status.innerHTML = 'Dashboard loaded successfully<br>Data sources: ' + 
+                        Object.keys(state.data).map(key => `${key}: ${state.data[key].length}`).join(', ');
+                } else {
+                    status.innerHTML = 'Dashboard not loaded properly';
+                }
+            }, 2000);
+        });
+    </script>
+    
+    <!-- Load the main dashboard -->
+    <script src="config.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="js/bubble-chart-app.js"></script>
+</body>
+</html>
