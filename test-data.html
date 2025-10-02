@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Data Access</title>
+</head>
+<body>
+    <h1>Test Data Access</h1>
+    <p>Testing if Data folder is accessible...</p>
+    <script>
+        // Test if we can access the data files
+        fetch('Data/Pathmathics_Brand_Manufacturer_Classified_v2.csv')
+            .then(response => {
+                if (response.ok) {
+                    document.body.innerHTML += '<p style="color: green;">✅ Data folder is accessible!</p>';
+                } else {
+                    document.body.innerHTML += '<p style="color: red;">❌ Data folder not accessible: ' + response.status + '</p>';
+                }
+            })
+            .catch(error => {
+                document.body.innerHTML += '<p style="color: red;">❌ Error: ' + error.message + '</p>';
+            });
+    </script>
+</body>
+</html>
