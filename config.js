@@ -5,18 +5,18 @@ const config = {
     
     // Data paths for v1 (original)
     dataPathsV1: {
-        manufacturer: '../../Data/Pathmathics_Brand_Manufacturer_Classified.csv',
-        dme: '../../Data/Pathmatics_DME_classified.csv',
-        instagram: '../../Data/SM_IG_rows_all.csv',
-        tiktok: '../../Data/SM_TikTok_rows_1_20000.csv'
+        manufacturer: 'Data/Pathmathics_Brand_Manufacturer_Classified.csv',
+        dme: 'Data/Pathmatics_DME_classified.csv',
+        instagram: 'Data/SM_IG_rows_all.csv',
+        tiktok: 'Data/SM_TikTok_rows_1_20000.csv'
     },
     
     // Data paths for v2 (new structure)
     dataPathsV2: {
-        manufacturer: '../../Data/Pathmathics_Brand_Manufacturer_Classified_v2.csv',
-        dme: '../../Data/Pathmatics_DME_classified_v2.csv',
-        instagram: '../../Data/SM_IG_Breast_Pump_Brands_analyzed_v2.csv',
-        tiktok: '../../Data/SM_TikTok_Breast_Pump_Brands_analyzed_v2.csv'
+        manufacturer: 'Data/Pathmathics_Brand_Manufacturer_Classified_v2.csv',
+        dme: 'Data/Pathmatics_DME_classified_v2.csv',
+        instagram: 'Data/SM_IG_Breast_Pump_Brands_analyzed_v2.csv',
+        tiktok: 'Data/SM_TikTok_Breast_Pump_Brands_analyzed_v2.csv'
     },
     
     // Get current data paths based on version
